@@ -41,28 +41,27 @@ def download_and_extract(data='Wikipedia'):
     Download and extract the GloVe
     :return: None
     """
-
-    if data=='Wikipedia':
-        DATA_URL = 'http://nlp.stanford.edu/data/glove.6B.zip'
-    elif data=='Common_Crawl_840B':
-        DATA_URL = 'http://nlp.stanford.edu/data/wordvecs/glove.840B.300d.zip'
-    elif data=='Common_Crawl_42B':
-        DATA_URL = 'http://nlp.stanford.edu/data/wordvecs/glove.42B.300d.zip'
-    elif data=='Twitter':
-        DATA_URL = 'http://nlp.stanford.edu/data/wordvecs/glove.twitter.27B.zip'
+    
+    data_dict = {
+        'Wikipedia':'http://nlp.stanford.edu/data/glove.6B.zip',
+        'Common_Crawl_840B':'http://nlp.stanford.edu/data/wordvecs/glove.840B.300d.zip',
+        'Common_Crawl_42B':'http://nlp.stanford.edu/data/wordvecs/glove.42B.300d.zip',
+        'Twitter':'http://nlp.stanford.edu/data/wordvecs/glove.twitter.27B.zip'
+    }
+    
+    if data in data_dict.keys():
+        DATA_URL = data_dict[data]
     else:
         print("prameter should be Twitter, Common_Crawl_42B, Common_Crawl_840B, or Wikipedia")
         exit(0)
 
-
-    dest_directory = DATA_DIR
-    if not os.path.exists(dest_directory):
-        os.makedirs(dest_directory)
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
     filename = DATA_URL.split('/')[-1]
-    filepath = os.path.join(dest_directory, filename)
+    filepath = os.path.join(DATA_DIR, filename)
     print(filepath)
 
-    path = os.path.abspath(dest_directory)
+    path = os.path.abspath(DATA_DIR)
     if not os.path.exists(filepath):
         def _progress(count, block_size, total_size):
             sys.stdout.write('\rDownloading %s %.2f%%' % (filename,
