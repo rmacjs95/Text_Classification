@@ -40,14 +40,12 @@ def download_and_extract():
     Download and extract the WOS datasets
     :return: None
     """
-    dest_directory = DATA_DIR
-    if not os.path.exists(dest_directory):
-        os.makedirs(dest_directory)
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
     filename = DATA_URL.split('/')[-1]
-    filepath = os.path.join(dest_directory, filename)
+    filepath = os.path.join(DATA_DIR, filename)
 
-
-    path = os.path.abspath(dest_directory)
+    path = os.path.abspath(DATA_DIR)
     if not os.path.exists(filepath):
         def _progress(count, block_size, total_size):
             sys.stdout.write('\rDownloading %s %.2f%%' % (filename,
@@ -58,5 +56,5 @@ def download_and_extract():
 
         print('Downloaded', filename)
 
-        tarfile.open(filepath, 'r').extractall(dest_directory)
+        tarfile.open(filepath, 'r').extractall(DATA_DIR)
     return path
